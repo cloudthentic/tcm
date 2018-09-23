@@ -1,0 +1,27 @@
+product: IIS
+version: 7.0
+
+capability:
+  name: web-server
+  version: 0.1
+  capability-attributes:
+    platform-support:
+      windows: Yes
+      linux: No
+      mac: No
+    Static-Files:	Yes
+    HTTP-Access-Logs:	Yes
+    Port-Sharing: Yes # Multiple apps on the same port
+    SSL-Certificates:	Yes
+    Windows-Authentication:	Yes
+    Management-Console: Yes
+    Process-Activation:	Yes # start up
+    Application-Initialization:	Yes # warm up
+    Configuration-API: Yes
+    Request-Filtering-and-Limits: Yes
+    IP-and-Domain-Restrictions: Yes
+    HTTP-Redirect-Rules: Yes
+    WebSocket-Protocol:	Yes
+    Response-Output-Caching: Yes
+    Compression-Optional: Yes
+    FTP-Server:	Yes

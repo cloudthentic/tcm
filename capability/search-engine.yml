@@ -1,0 +1,4 @@
+capability:
+  name: search-engine
+  version: 0.1 # 
+    Elastic-Search-API:	"yes|no"

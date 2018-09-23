@@ -1,0 +1,24 @@
+capability:
+  name: web-server
+  version: 0.1 # initial version of web server capabiliy attriutes used for basic Kestrel vs IIS comparison
+  capability-attributes:
+    platform-support:
+      windows:
+      linux:
+      mac:
+    Static-Files:	
+    HTTP-Access-Logs:	
+    Port-Sharing:  # Multiple apps on the same port
+    SSL-Certificates:
+    Windows-Authentication:	
+    Management-Console: 
+    Process-Activation:	 # start up
+    Application-Initialization:	 # warm up
+    Configuration-API: 
+    Request-Filtering-and-Limits: 
+    IP-and-Domain-Restrictions: 
+    HTTP-Redirect-Rules: 
+    WebSocket-Protocol:	 # provided with extension
+    Response-Output-Caching: 
+    Compression-Optional: 
+    FTP-Server:	

@@ -1,0 +1,27 @@
+product: Kestrel
+version: n/a
+
+capability: 
+  name: web-server
+  version: 0.1
+  capability-attributes:
+    platform-support:
+      windows: Yes
+      linux: Yes
+      mac: Yes
+    Static-Files:	Yes
+    HTTP-Access-Logs:	No
+    Port-Sharing: No # Multiple apps on the same port
+    SSL-Certificates:	Yes
+    Windows-Authentication:	No
+    Management-Console: No
+    Process-Activation:	No # start up
+    Application-Initialization:	No # warm up
+    Configuration-API: No
+    Request-Filtering-and-Limits: No
+    IP-and-Domain-Restrictions: No
+    HTTP-Redirect-Rules: Yes
+    WebSocket-Protocol:	No # provided with extension
+    Response-Output-Caching: No
+    Compression-Optional: Yes
+    FTP-Server:	No
