@@ -1,0 +1,29 @@
+product: Azure API Management
+product-version: Developer
+record_date: 2018/11/01
+
+capabilities:
+  - capability:
+      name: SLA
+      capability-schema-version: 0.1
+      capability-attributes:
+        Availability: No
+
+  - capability:
+      name: Network
+      capability-schema-version: 0.1
+      capability-attributes:
+        Virtual-Network-Support: Yes
+        Service-Endpoint: No 
+
+  - capability:
+      name: Multi-Region
+      capability-schema-version: 0.1
+      capability-attributes:
+        Multi-Region-Deployment: No
+
+  - capability:
+      name: Security
+      capability-schema-version: 0.1
+      capability-attributes:
+        Active-Directory-Integration: Yes
