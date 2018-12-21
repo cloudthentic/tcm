@@ -30,4 +30,3 @@ Features:
 | -- | -- |
 | Network: Virtual Network Integration | No |
 | Network: Service Endpoint | Yes |
-
