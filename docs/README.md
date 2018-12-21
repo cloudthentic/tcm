@@ -4,6 +4,11 @@ Framework to describe (Azure) Technology capabilities as an open source project.
 
 ## Example Capability Matrix - Single capability, multiple products
 
+Features:
+- Add product
+- Select capability
+- View matrix
+
 | Product | Network: Virtual Network Integration |
 | -- | -- |
 | Azure Kubernetes Service | Yes |
