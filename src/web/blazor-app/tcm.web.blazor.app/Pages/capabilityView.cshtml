@@ -1,0 +1,74 @@
+﻿@page "/capabilityView"
+@inject HttpClient Http
+
+<h1>Capability View</h1>
+
+@if (capabilitiesList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <select name="capabilities">
+        @foreach (var capabilityItem in capabilitiesList)
+        {
+            <option value="@capabilityItem.Name">@capabilityItem.Name</option>
+        }
+    </select>
+}
+
+@if (capabilityMatrix == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Capability</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in capabilityMatrix)
+            {
+                <tr>
+                    <td>@item.Product</td>
+                    <td>@item.HasCapability</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+
+    class CapabilityMatrix
+    {
+        public string Product { get; set; }
+        public string HasCapability { get; set; }
+    }
+
+    class Capability
+    {
+        public string Name { get; set; }
+    }
+
+    CapabilityMatrix[] capabilityMatrix;
+    Capability[] capabilitiesList;
+
+    protected override async Task OnInitAsync()
+    {
+        try
+        {
+            capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
+            capabilitiesList = await Http.GetJsonAsync<Capability[]>("sample-data/capabilities.json");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+        }
+    }
+
+}
