@@ -1,0 +1,18 @@
+[
+  {
+    "product": "CosmosDB",
+    "hasCapability": "Yes"
+  },
+  {
+    "product": "App Service",
+    "hasCapability": "Yes"
+  },
+  {
+    "product": "API Management",
+    "hasCapability": "No"
+  },
+  {
+    "product": "IoT Hub",
+    "hasCapability": "No"
+  }
+]
