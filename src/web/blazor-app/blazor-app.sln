@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tcm.web.blazor.app", "tcm.web.blazor.app\tcm.web.blazor.app.csproj", "{80B0EAF3-D23F-4184-BAF7-99498178A802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.web.blazor.app", "tcm.web.blazor.app\tcm.web.blazor.app.csproj", "{80B0EAF3-D23F-4184-BAF7-99498178A802}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{912521DA-6D6A-4A22-A087-379437B962DD}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tcm.web.api", "tcm.web.api\tcm.web.api.csproj", "{58C8A904-803C-41CB-9CAF-A0E9FD7565ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,10 @@ Global
 		{80B0EAF3-D23F-4184-BAF7-99498178A802}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80B0EAF3-D23F-4184-BAF7-99498178A802}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80B0EAF3-D23F-4184-BAF7-99498178A802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C8A904-803C-41CB-9CAF-A0E9FD7565ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C8A904-803C-41CB-9CAF-A0E9FD7565ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C8A904-803C-41CB-9CAF-A0E9FD7565ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C8A904-803C-41CB-9CAF-A0E9FD7565ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
