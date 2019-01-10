@@ -3,19 +3,21 @@
 
 <h1>Capability View</h1>
 
-@if (capabilitiesList == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <select name="capabilities">
-        @foreach (var capabilityItem in capabilitiesList)
-        {
-            <option value="@capabilityItem.Name">@capabilityItem.Name</option>
-        }
-    </select>
-}
+<div>
+    @if (capabilitiesList == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <select name="capabilities">
+            @foreach (var capabilityItem in capabilitiesList)
+            {
+                <option value="@capabilityItem.Name">@capabilityItem.Name</option>
+            }
+        </select>
+    }
+</div>
 
 @if (capabilityMatrix == null)
 {
