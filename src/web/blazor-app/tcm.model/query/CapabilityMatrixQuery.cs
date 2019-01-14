@@ -7,12 +7,11 @@ namespace tcm.model.query
     public class CapabilityMatrixQuery
     {
 
-        private List<Product> products;
-
-        public List<ProductHasCapability> ViewProductListFor(Capability capability)
+        public List<ProductsPerCapability> ViewProductListFor(Capability capability)
         {
+
             // find in the repository ProductPerCapability list for specified capability
-            return new List<ProductHasCapability>();
+            return new List<ProductsPerCapability>();
         }
     }
 }
