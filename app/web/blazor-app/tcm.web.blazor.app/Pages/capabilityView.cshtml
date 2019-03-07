@@ -46,28 +46,18 @@ else
 
 @functions {
 
-    class CapabilityMatrix
-    {
-        public string Product { get; set; }
-        public string HasCapability { get; set; }
-    }
 
-    class Capability
-    {
-        public string Name { get; set; }
-    }
-
-    CapabilityMatrix[] capabilityMatrix;
-    Capability[] capabilitiesList;
-    Capability selectedCapability = new Capability();
+    tcm.model.CapabilityMatrix[] capabilityMatrix;
+    tcm.model.Capability[] capabilitiesList;
+    tcm.model.Capability selectedCapability = new tcm.model.Capability();
     bool initialized = false;
 
     protected override async Task OnInitAsync()
     {
         try
         {
-            capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
-            capabilitiesList = await Http.GetJsonAsync<Capability[]>("sample-data/capabilities.json");
+            capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
+            capabilitiesList = await Http.GetJsonAsync<tcm.model.Capability[]>("sample-data/capabilities.json");
             initialized = true;
             System.Diagnostics.Debug.WriteLine("Initialized...");
         }
@@ -83,8 +73,8 @@ else
         selectedCapability.Name = e.Value.ToString();
         if (initialized == true && selectedCapability != null)
         {
-            if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/capability-serviceendpoint-for-products.json");
-            else if (selectedCapability.Name == "VNet Integration") capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/capability-vnetintegration-for-products.json");
+            if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/capability-serviceendpoint-for-products.json");
+            else if (selectedCapability.Name == "VNet Integration") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/capability-vnetintegration-for-products.json");
         }
     }
 
