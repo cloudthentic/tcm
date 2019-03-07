@@ -6,7 +6,7 @@ capabilities:
   - capability:
       id: "Network-v0.1"
       capability-attributes:
-        Virtual-Network-Integration: Yes
+        Virtual-Network-Integration: No
         Service-Endpoint: No
 
   - capability:
