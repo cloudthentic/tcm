@@ -10,7 +10,7 @@
     }
     else
     {
-        <select name="capabilities">
+        <select name="capabilities" onchange="@LoadDataAsync" >
             @foreach (var capabilityItem in capabilitiesList)
             {
                 <option value="@capabilityItem.Name">@capabilityItem.Name</option>
@@ -59,6 +59,8 @@ else
 
     CapabilityMatrix[] capabilityMatrix;
     Capability[] capabilitiesList;
+    Capability selectedCapability = new Capability();
+    bool initialized = false;
 
     protected override async Task OnInitAsync()
     {
@@ -66,10 +68,23 @@ else
         {
             capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
             capabilitiesList = await Http.GetJsonAsync<Capability[]>("sample-data/capabilities.json");
+            initialized = true;
+            System.Diagnostics.Debug.WriteLine("Initialized...");
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.ToString());
+        }
+    }
+
+    public async Task LoadDataAsync(UIChangeEventArgs e)
+    {
+        System.Diagnostics.Debug.WriteLine("LoadDataAsync...");
+        selectedCapability.Name = e.Value.ToString();
+        if (initialized == true && selectedCapability != null)
+        {
+            if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/capability-serviceendpoint-for-products.json");
+            else if (selectedCapability.Name == "VNet Integration") capabilityMatrix = await Http.GetJsonAsync<CapabilityMatrix[]>("sample-data/capability-vnetintegration-for-products.json");
         }
     }
 
