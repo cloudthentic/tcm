@@ -1,9 +1,11 @@
 [
 
   {
-    "name": "Service Endpoint"
+    "name": "Service Endpoint",
+    "id": "Service-Endpoint"
   },
   {
-    "name": "VNet Integration"
+    "name": "VNet Integration",
+    "id": "Virtual-Network-Integration"
   }
 ]
