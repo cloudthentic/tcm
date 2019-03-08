@@ -8,5 +8,6 @@ namespace tcm.model
     public class Capability
     {
         public string Name { get; set; }
+        public string Id { get; set; }
     }
 }
