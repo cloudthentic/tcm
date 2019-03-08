@@ -69,11 +69,15 @@ else
 
     public async Task LoadDataAsync(UIChangeEventArgs e)
     {
+
+        string url = new Uri("http://localhost:5001/api/values/Network-v0.1|Virtual-Network-Integration").AbsoluteUri;
+
         System.Diagnostics.Debug.WriteLine("LoadDataAsync...");
         selectedCapability.Name = e.Value.ToString();
         if (initialized == true && selectedCapability != null)
         {
-            if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/capability-serviceendpoint-for-products.json");
+            //if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/capability-serviceendpoint-for-products.json");
+            if (selectedCapability.Name == "Service Endpoint") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>(url);
             else if (selectedCapability.Name == "VNet Integration") capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/capability-vnetintegration-for-products.json");
         }
     }

@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.web.api", "web\blazor-app\tcm.web.api\tcm.web.api.csproj", "{EC170566-EEAC-44B3-9346-0D224975BB75}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.web.blazor.app", "web\blazor-app\tcm.web.blazor.app\tcm.web.blazor.app.csproj", "{1FEA6289-C4E2-43F8-AD0B-B594FAEBD13A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC170566-EEAC-44B3-9346-0D224975BB75} = {EC170566-EEAC-44B3-9346-0D224975BB75}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{B1338343-6012-48FB-9F72-EEDCB75C0FB2}"
 EndProject
