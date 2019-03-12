@@ -1,0 +1,20 @@
+product: Azure Cosmos DB
+product-id: azure-cosmos-db|basic
+record_date: 2018/10/31
+
+capabilities:
+  - capability:
+      id: Network|0.1
+      capability-attributes:
+        Virtual-Network-Integration: No
+        Service-Endpoint: No
+
+  - capability:
+      id: database-consistency|0.1
+      capability-attributes:
+        strong-consistency: Yes
+        strong-consistency-multiregion: Yes
+        bounded-staleness: Yes
+        session: Yes
+        consistent-prefix: Yes
+        eventual: Yes
