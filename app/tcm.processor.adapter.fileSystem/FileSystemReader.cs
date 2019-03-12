@@ -17,24 +17,29 @@ namespace tcm.processor.adapter.fileSystem
 
         private void ProcessDirectory(System.IO.DirectoryInfo directoryInfo, IList<ProductAggregate> productList)
         {
-            while(directoryInfo.GetDirectories() != null || directoryInfo.GetDirectories().Length > 0)
-            {
-                foreach(var directory in directoryInfo.GetDirectories())
-                {
 
+            if(directoryInfo.GetDirectories() != null)
+            {
+                this.ProcessFilesInDirectory(directoryInfo, productList);
+
+                foreach (var directory in directoryInfo.GetDirectories())
+                {
+                    
+                    this.ProcessDirectory(directory, productList);
                 }
             }
         }
 
-        private void ProcessFileInDirectory(System.IO.DirectoryInfo directory, IList<ProductAggregate> productList)
+        private void ProcessFilesInDirectory(System.IO.DirectoryInfo directory, IList<ProductAggregate> productList)
         {
             foreach(var file in directory.GetFiles())
             {
-                
+                var productAggregate = this.ParseYaml(file.FullName);
+                productList.Add(productAggregate);
             }
         }
 
-        public System.Collections.Generic.Dictionary<object, object> ParseYaml(string path)
+        public ProductAggregate ParseYaml(string path)
         {
             System.IO.TextReader tr = System.IO.File.OpenText(path);
             var deserializer = new YamlDotNet.Serialization.Deserializer();
@@ -44,11 +49,13 @@ namespace tcm.processor.adapter.fileSystem
 
             var obj = (yamlObject as System.Collections.Generic.Dictionary<object, object>);
 
-            return obj;
+            var productAggregate = this.YamlObjToProductAggregate(obj);
+
+            return productAggregate;
 
         }
 
-        public ProductAggregate YamlObjToProductAggregate(System.Collections.Generic.Dictionary<object, object> yamlObj)
+        private ProductAggregate YamlObjToProductAggregate(System.Collections.Generic.Dictionary<object, object> yamlObj)
         {
             var productAggregate = new ProductAggregate();
             productAggregate.product = yamlObj["product"] as string;
@@ -63,9 +70,10 @@ namespace tcm.processor.adapter.fileSystem
                 string capabilityId = values["id"] as string;
                 Capability cap = productAggregate.productCapabilities.AddNewCapability(capabilityId);
 
+                // add attributes
                 foreach(var capItem in values["capability-attributes"] as Dictionary<object, object>)
                 {
-                    var key = capItem.Key;
+                    cap.capabilityAttributes.AddNewAttribute(capItem.Key as string, capItem.Value as string);
                 }
             }
             

@@ -1,0 +1,10 @@
+product: Azure Container Instances
+product-version: 
+record_date: 2018/12/20
+
+capabilities:
+  - capability:
+      id: "Network-v0.1"
+      capability-attributes:
+        Virtual-Network-Integration: [Yes]
+        Service-Endpoint: [No]
