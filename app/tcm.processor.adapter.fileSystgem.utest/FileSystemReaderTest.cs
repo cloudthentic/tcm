@@ -9,15 +9,25 @@ namespace tcm.processor.adapter.fileSystem.utest
         public void ParseYamlTest()
         {
             tcm.processor.adapter.fileSystem.FileSystemReader reader = new FileSystemReader();
-            reader.ParseYaml("./TestData/azure-cosmos-db.yml");
+            reader.ParseYaml("./TestData/singleFile/azure-cosmos-db.yml");
         }
 
         [Fact]
-        public void YamlObjToProductAggregateTest()
+        public void ParseFileSystemWithProductHiearchyTest()
         {
             tcm.processor.adapter.fileSystem.FileSystemReader reader = new FileSystemReader();
-            var result = reader.ParseYaml("./TestData/azure-cosmos-db.yml");
-            var product = reader.YamlObjToProductAggregate(result);
+            var results = reader.ParseFileSystemWithProductHiearchy("./TestData/singleFile");
+            Assert.NotNull(results);
+            Assert.True(results.Count == 1);
+        }
+
+        [Fact]
+        public void ParseFileSystemWithProductHiearchyTest_Hiearchy()
+        {
+            tcm.processor.adapter.fileSystem.FileSystemReader reader = new FileSystemReader();
+            var results = reader.ParseFileSystemWithProductHiearchy("./TestData/hiearchy");
+            Assert.NotNull(results);
+            Assert.True(results.Count == 2, "Expected 2 products - failed");
         }
     }
 }
