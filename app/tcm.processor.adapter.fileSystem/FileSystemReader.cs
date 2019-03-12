@@ -34,24 +34,42 @@ namespace tcm.processor.adapter.fileSystem
             }
         }
 
-        public void ParseYaml(string path)
+        public System.Collections.Generic.Dictionary<object, object> ParseYaml(string path)
         {
             System.IO.TextReader tr = System.IO.File.OpenText(path);
             var deserializer = new YamlDotNet.Serialization.Deserializer();
             var yamlObject = deserializer.Deserialize(tr);
 
-            var serializer = new Newtonsoft.Json.JsonSerializer();
+            Type type = yamlObject.GetType();
 
-            var ms = new System.IO.MemoryStream();
-            var w = new System.IO.StreamWriter(ms);
-            serializer.Serialize(w, yamlObject);
+            var obj = (yamlObject as System.Collections.Generic.Dictionary<object, object>);
 
-            ms.Seek(0, System.IO.SeekOrigin.Begin);
-            System.IO.TextReader jtr = new System.IO.StreamReader(ms);
-            Newtonsoft.Json.JsonTextReader reader = new Newtonsoft.Json.JsonTextReader(jtr);
+            return obj;
+
+        }
+
+        public ProductAggregate YamlObjToProductAggregate(System.Collections.Generic.Dictionary<object, object> yamlObj)
+        {
+            var productAggregate = new ProductAggregate();
+            productAggregate.product = yamlObj["product"] as string;
+            productAggregate.productId = yamlObj["product-id"] as string;
+
+            var capabilities = yamlObj["capabilities"] as List<object>;
+            foreach(var capability in capabilities)
+            {
+                var items = capability as Dictionary<object, object>;
+                var values = items["capability"] as Dictionary<object, object>;
+
+                string capabilityId = values["id"] as string;
+                Capability cap = productAggregate.productCapabilities.AddNewCapability(capabilityId);
+
+                foreach(var capItem in values["capability-attributes"] as Dictionary<object, object>)
+                {
+                    var key = capItem.Key;
+                }
+            }
             
-            var result = serializer.Deserialize(reader);
-
+            return productAggregate;
         }
     }
 }
