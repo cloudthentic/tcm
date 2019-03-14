@@ -4,8 +4,19 @@ using tcm.processor.model;
 
 namespace tcm.processor.adapter.fileSystem
 {
-    public class FileSystemReader
+    /// <summary>
+    /// Ports-adapter arch Adapter for processing hiearchy of product description files
+    /// </summary>
+    public class FileSystemReaderAdapter
     {
+        /// <summary>
+        /// Parse file system from given path and return list of products dicovered in the faile system
+        /// </summary>
+        /// <remarks>
+        /// Product failes are YAML files conforming to defined schema. Schema (informal) are defined in 'Capabilities' hiearchy
+        /// </remarks>
+        /// <param name="path"></param>
+        /// <returns>List of Product aggregates</returns>
         public IList<ProductAggregate> ParseFileSystemWithProductHiearchy(string path)
         {
             List<ProductAggregate> productList = new List<ProductAggregate>();
