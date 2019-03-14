@@ -9,9 +9,13 @@
   <ItemGroup>
     <None Remove="TestData\azure-cosmos-db.yml" />
     <None Remove="TestData\hiearchy\azure-cosmos-db.yml" />
+    <None Remove="TestData\hiearchy\Container Instances\azure-container-instances.yml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestData\hiearchy\Container Instances\azure-container-instances.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\hiearchy\Cosmos Db\azure-cosmos-db.yml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
