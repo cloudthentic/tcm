@@ -12,51 +12,33 @@ namespace tcm.processor.model.Services
         {
             IList<CapabilityAggregate> capabilityAggregates = new List<CapabilityAggregate>();
 
+
             foreach(var product in products)
             {
-                this.MapIntoNewOrExistingCapabilityAggregate(capabilityAggregates, product);
+                foreach(var capability in product.productCapabilities.capabilities)
+                {
+                    foreach(var attribute in capability.capabilityAttributes.attributes)
+                    {
+                        var capabilityAggregate = this.IsCapabilityAttributeCreated(capabilityAggregates, capability.Id, attribute.Name);
+                        if(capabilityAggregate == null) this.AddNewCapabilityAndProductIntoCapabilityAttributeList(capabilityAggregates, capability, product, attribute);
+                        else capabilityAggregate.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value);
+                    }
+                }
             }
+
 
             return capabilityAggregates;
         }
 
-        private void MapIntoNewOrExistingCapabilityAggregate(
-            IList<CapabilityAggregate> capabilityAggregates, 
-            ProductAggregate product)
+        private CapabilityAggregate IsCapabilityAttributeCreated(IList<CapabilityAggregate> capabilityAggregates, string capabilityId, string attributeName)
         {
-            foreach(Capability capability in product.productCapabilities.capabilities)
+            foreach(var capabilityAggregate in capabilityAggregates)
             {
-                this.MergeCapabilityInto(capabilityAggregates, capability, product);
+                if (capabilityAggregate.CapabilityId == capabilityId && capabilityAggregate.Attribute == attributeName) return capabilityAggregate;
             }
+            return null;
         }
 
-        private void MergeCapabilityInto(
-            IList<CapabilityAggregate> capabilityAggregates, 
-            Capability capability, 
-            ProductAggregate product)
-        {
-            foreach(CapabilityAggregate capabilityAggregate in capabilityAggregates)
-            {
-                foreach(var item in capability.capabilityAttributes.attributes)
-                {
-                    if (capabilityAggregate.CapabilityId == capability.Id && capabilityAggregate.Attribute == item.Name)
-                    {
-                        this.AddNewProductIntoExistingCapabilityAttributeList(capabilityAggregate, item, product);
-                    }
-                }
-                
-            }
-
-            this.AddNewCapabilityAndProductIntoCapabilityAttributeList(capabilityAggregates, capability, product);
-        }
-
-        private void AddNewProductIntoExistingCapabilityAttributeList(
-            CapabilityAggregate capabilityAggregate, 
-            CapabilityAttribute capabilityAttribute, 
-            ProductAggregate product)
-        {
-            capabilityAggregate.AddNewProductCapabilityAttributeToTheList(product.product, capabilityAttribute.Value);
-        }
 
         /// <summary>
         /// 
@@ -67,15 +49,13 @@ namespace tcm.processor.model.Services
         private void AddNewCapabilityAndProductIntoCapabilityAttributeList(
             IList<CapabilityAggregate> capabilityAggregates, 
             Capability capability, 
-            ProductAggregate product)
+            ProductAggregate product,
+            CapabilityAttribute  attribute)
         {
             CapabilityAggregate ca = new CapabilityAggregate();
-            foreach (var item in capability.capabilityAttributes.attributes)
-            {
-                ca.CapabilityId = capability.Id;
-                ca.Attribute = item.Name;
-                ca.AddNewProductCapabilityAttributeToTheList(product.product, item.Value);
-            }
+            ca.CapabilityId = capability.Id;
+            ca.Attribute = attribute.Name;
+            ca.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value);
             capabilityAggregates.Add(ca);
 
         }
