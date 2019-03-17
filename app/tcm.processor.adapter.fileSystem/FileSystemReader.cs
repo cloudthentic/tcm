@@ -49,6 +49,10 @@ namespace tcm.processor.adapter.fileSystem
             {
                 telemetry.TrackException(ex);
             }
+            finally
+            {
+                telemetry.Flush();
+            }
 
             return productList;
         }

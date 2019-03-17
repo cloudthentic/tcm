@@ -25,13 +25,13 @@ namespace tcm.web.api.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{capability}/{attribute}")]
         [ResponseCache(Duration = 10)]
-        public ActionResult<string> Get(string id)
+        public ActionResult<string> Get(string capability, string attribute)
         {
 
             tcm.processor.adapter.tableStorage.TableStorageReaderAdapter ra = new processor.adapter.tableStorage.TableStorageReaderAdapter();
-            var result = ra.ReadProduct(id);
+            var result = ra.ReadProduct(capability, attribute);
             return result;
         }
 

@@ -14,7 +14,7 @@ namespace tcm.processor.adapter.tableStorage
     public class TableStorageWritterAdapter
     {
         CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=tcmappstorage;AccountKey=qPPnZg/munGpCTXhPe9ypvfhns557CUuYvA4be53NzP+wEc/zs6XASWAlHqMLpG4z9TltL4/LEajviZV6uspvQ==;EndpointSuffix=core.windows.net");
-        TelemetryClient telemetry; 
+        TelemetryClient telemetry;
 
         public TableStorageWritterAdapter()
         {
@@ -29,37 +29,55 @@ namespace tcm.processor.adapter.tableStorage
             var timer = System.Diagnostics.Stopwatch.StartNew();
             try
             { 
-                // Application Insights correlation
-                using (var telemetryOperation = telemetry.StartOperation<RequestTelemetry>("WriteProductAggregateListToTableStorage"))
+
+                // convert Productaggregates into CapabilityAggregate
+                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+                CloudTable table = tableClient.GetTableReference("tcmapp");
+
+                var items = this.ConvertProductsToTableCapabilityEntity(products);
+                
+                var partitions = this.GetPartitionKeyList(items);
+
+                // insert or replace in batch and split batch per partition key
+                foreach(var partition in partitions)
                 {
-
-
-                    // convert Productaggregates into CapabilityAggregate
-                    CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                    CloudTable table = tableClient.GetTableReference("tcmapp");
-
                     TableBatchOperation batchOperation = new TableBatchOperation();
-                    foreach (var item in this.ConvertProductsToTableCapabilityEntity(products))
+                    foreach(var item in items)
                     {
-                        batchOperation.InsertOrReplace(item);
+                        // add only if the item belongs to the partition
+                        if(item.PartitionKey == partition) batchOperation.InsertOrReplace(item);
                     }
-
                     IList<TableResult> result = table.ExecuteBatchAsync(batchOperation).Result;
-                    success = true;
-                    telemetry.GetMetric("TableStorageWrites").TrackValue(1);
-                    telemetry.TrackEvent("TableStorageWritterAdapter.WriteProductAggregateListToTableStorage Invoked");
+
                 }
+
+                success = true;
+                telemetry.GetMetric("TableStorageWrites").TrackValue(1);
+                telemetry.TrackEvent("TableStorageWritterAdapter.WriteProductAggregateListToTableStorage Invoked");
+                
             }
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
+                throw ex;
             }
             finally
             {
                 timer.Stop();
                 telemetry.TrackDependency("Azure Table Storage", "WriteProductAggregateListToTableStorage", startTime, timer.Elapsed, success);
+                telemetry.Flush();
             }
 
+        }
+
+        public IList<string> GetPartitionKeyList(IList<CapabilityEntity> entities)
+        {
+            var keys = new List<string>();
+            foreach(var item in entities)
+            {
+                if (keys.BinarySearch(item.PartitionKey) < 0) keys.Add(item.PartitionKey);
+            }
+            return keys;
         }
 
         public IList<CapabilityEntity> ConvertProductsToTableCapabilityEntity(IList<model.ProductAggregate> products)
