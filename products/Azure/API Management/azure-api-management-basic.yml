@@ -1,6 +1,5 @@
 product: Azure API Management
 product-id: azure-api-management|basic
-product-version: Basic
 record_date: 2018/11/01
 
 capabilities:
@@ -21,6 +20,6 @@ capabilities:
         Multi-Region-Deployment: No
 
   - capability:
-      name: Security|0.1
+      id: Security|0.1
       capability-attributes:
         Active-Directory-Integration: No
