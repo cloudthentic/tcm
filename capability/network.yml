@@ -1,6 +1,6 @@
 # Network Capability
 capability:
-  id: "Network-v0.1"
+  id: Network|0.1
   capability-attributes:
       Virtual-Network-Integration: [Yes, No]
       Service-Endpoint: [Yes, No]
