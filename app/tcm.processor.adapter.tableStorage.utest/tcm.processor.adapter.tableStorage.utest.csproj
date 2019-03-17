@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\tcm.processor.adapter.tableStorage\tcm.processor.adapter.tableStorage.csproj" />
     <ProjectReference Include="..\tcm.processor.model\tcm.processor.model.csproj" />
   </ItemGroup>
 
