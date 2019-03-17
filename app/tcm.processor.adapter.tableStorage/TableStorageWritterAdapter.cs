@@ -58,7 +58,6 @@ namespace tcm.processor.adapter.tableStorage
             {
                 timer.Stop();
                 telemetry.TrackDependency("Azure Table Storage", "WriteProductAggregateListToTableStorage", startTime, timer.Elapsed, success);
-                telemetry.Flush();
             }
 
         }
