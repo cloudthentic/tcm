@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using tcm.processor.model;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace tcm.processor.adapter.fileSystem
 {
@@ -11,9 +13,13 @@ namespace tcm.processor.adapter.fileSystem
     public class FileSystemReaderAdapter
     {
 
+        TelemetryClient telemetry;
+
+
         public FileSystemReaderAdapter()
         {
-
+            TelemetryConfiguration config = new TelemetryConfiguration("362767d6-2f0d-48cc-b789-ae478063e59f");
+            telemetry = new TelemetryClient(config);
         }
 
         /// <summary>
@@ -27,9 +33,23 @@ namespace tcm.processor.adapter.fileSystem
         public IList<ProductAggregate> ParseFileSystemWithProductHiearchy(string path)
         {
             List<ProductAggregate> productList = new List<ProductAggregate>();
-            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
+            try
+            {
+                using (var telemetryOperation = telemetry.StartOperation<RequestTelemetry>("ParseFileSystemWithProductHiearchy"))
+                {
+                    System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(path);
+                    this.ProcessDirectory(info, productList);
 
-            this.ProcessDirectory(info, productList);
+                    telemetry.GetMetric("FileSystemWithProductHiearchyParsed").TrackValue(1);
+                    telemetry.TrackEvent("FileSystemReaderAdapter.ParseFileSystemWithProductHiearchy Invoked");
+                }
+                    
+            }
+            catch (Exception ex)
+            {
+                telemetry.TrackException(ex);
+            }
+
             return productList;
         }
 
