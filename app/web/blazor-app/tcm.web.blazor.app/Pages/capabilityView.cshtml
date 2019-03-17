@@ -56,7 +56,8 @@ else
     {
         try
         {
-            string url = new Uri("http://localhost:5001/api/Capabilities/Network-v0.1").AbsoluteUri;
+            string url = new Uri("http://localhost:5001/api/Capabilities/Network|0.1").AbsoluteUri;
+
 
             capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
             capabilitiesList = await Http.GetJsonAsync<tcm.model.Capability[]>(url);
@@ -72,9 +73,9 @@ else
     public async Task LoadDataAsync(UIChangeEventArgs e)
     {
 
-        
 
-        string url = new Uri("http://localhost:5001/api/values/Network-v0.1|" + e.Value.ToString()).AbsoluteUri;
+
+        string url = new Uri("http://localhost:5001/api/values/Network|0.1/" + e.Value.ToString()).AbsoluteUri;
 
         System.Diagnostics.Debug.WriteLine("LoadDataAsync... ");
         selectedCapability.Id = e.Value.ToString();
