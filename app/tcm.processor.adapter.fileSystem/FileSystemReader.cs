@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using tcm.processor.model;
+using Microsoft.ApplicationInsights;
 
 namespace tcm.processor.adapter.fileSystem
 {
@@ -9,6 +10,12 @@ namespace tcm.processor.adapter.fileSystem
     /// </summary>
     public class FileSystemReaderAdapter
     {
+
+        public FileSystemReaderAdapter()
+        {
+
+        }
+
         /// <summary>
         /// Parse file system from given path and return list of products dicovered in the faile system
         /// </summary>
