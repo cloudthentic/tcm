@@ -21,11 +21,12 @@ namespace tcm.processor.adapter.fileSystem.utest
             Assert.True(results.Count == 1);
         }
 
-        [Fact]
-        public void ParseFileSystemWithProductHiearchyTest_Hiearchy()
+        [Theory]
+        [InlineData("../../../../../products/azure")]
+        public void ParseFileSystemWithProductHiearchyTest_Hiearchy(object value)
         {
             tcm.processor.adapter.fileSystem.FileSystemReaderAdapter reader = new FileSystemReaderAdapter();
-            var results = reader.ParseFileSystemWithProductHiearchy("./TestData/hiearchy");
+            var results = reader.ParseFileSystemWithProductHiearchy(value as string);
             Assert.NotNull(results);
             Assert.True(results.Count == 2, "Expected 2 products - failed");
         }
