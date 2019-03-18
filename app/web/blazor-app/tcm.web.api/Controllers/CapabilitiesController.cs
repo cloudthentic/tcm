@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Web.Http.Cors;
+using Microsoft.Extensions.Configuration;
 
 namespace tcm.web.api.Controllers
 {
@@ -14,7 +15,13 @@ namespace tcm.web.api.Controllers
     [ApiController]
     public class CapabilitiesController : ControllerBase
     {
-        CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=tcmappstorage;AccountKey=qPPnZg/munGpCTXhPe9ypvfhns557CUuYvA4be53NzP+wEc/zs6XASWAlHqMLpG4z9TltL4/LEajviZV6uspvQ==;EndpointSuffix=core.windows.net");
+        IConfiguration config;
+
+        public CapabilitiesController(IConfiguration configuration)
+        {
+            this.config = configuration;
+        }
+        
 
         // GET: api/Capabilities
         [HttpGet]
@@ -27,7 +34,8 @@ namespace tcm.web.api.Controllers
         [HttpGet("{id}", Name = "Get")]
         public string Get(string id)
         {
-
+            var connection = this.config["apiConfiguration:tableStorageConnection"] as string;
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connection);
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             CloudTable table = tableClient.GetTableReference("tcmapp");
 

@@ -48,6 +48,7 @@ namespace tcm.processor.adapter.fileSystem
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
+                throw ex;
             }
             finally
             {

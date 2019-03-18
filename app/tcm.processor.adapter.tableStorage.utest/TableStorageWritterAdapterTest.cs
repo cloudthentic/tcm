@@ -1,11 +1,21 @@
 using System;
 using Xunit;
 using tcm.processor.model;
+using Microsoft.Extensions.Configuration;
 
 namespace tcm.processor.adapter.tableStorage.utest
 {
     public class TableStorageWritterAdapterTest
     {
+
+        private IConfigurationRoot GetConfiguration()
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("tcm.processor.adapter.tableStorage.utest.xunit.runner.json")
+                .Build();
+            return config;
+        }
+
         [Fact]
         public void ConvertProductsToTableCapabilityEntityTest()
         {
@@ -27,7 +37,8 @@ namespace tcm.processor.adapter.tableStorage.utest
             list.Add(pa1);
             list.Add(pa2);
 
-            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter("connection");
+            var connection = this.GetConfiguration()["tableStorageConnection"];
+            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter(connection);
             var result = wa.ConvertProductsToTableCapabilityEntity(list);
             Assert.NotNull(result);
             Assert.True(result.Count == 2);
@@ -36,7 +47,8 @@ namespace tcm.processor.adapter.tableStorage.utest
         [Fact]
         public void WriteProductAggregateListToTableStorageTest()
         {
-            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter("connection");
+            var connection = this.GetConfiguration()["tableStorageConnection"];
+            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter(connection);
 
             ProductAggregate pa1 = new ProductAggregate();
             pa1.product = "Azure Cosmos DB";

@@ -9,17 +9,17 @@ capabilities:
         Availability: No
 
   - capability:
-      Id: Network|0.1
+      id: Network|0.1
       capability-attributes:
         Virtual-Network-Integration: Yes
         Service-Endpoint: No 
 
   - capability:
-      Id: Multi-Region|0.1
+      id: Multi-Region|0.1
       capability-attributes:
         Multi-Region-Deployment: No
 
   - capability:
-      Id: Security|0.1
+      id: Security|0.1
       capability-attributes:
         Active-Directory-Integration: Yes
