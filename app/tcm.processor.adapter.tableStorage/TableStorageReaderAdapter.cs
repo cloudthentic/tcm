@@ -10,11 +10,12 @@ namespace tcm.processor.adapter.tableStorage
 {
     public class TableStorageReaderAdapter
     {
-        CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=tcmappstorage;AccountKey=qPPnZg/munGpCTXhPe9ypvfhns557CUuYvA4be53NzP+wEc/zs6XASWAlHqMLpG4z9TltL4/LEajviZV6uspvQ==;EndpointSuffix=core.windows.net");
+        CloudStorageAccount storageAccount;
         TelemetryClient telemetry;
 
-        public TableStorageReaderAdapter()
+        public TableStorageReaderAdapter(string connection)
         {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connection);
             TelemetryConfiguration config = new TelemetryConfiguration("362767d6-2f0d-48cc-b789-ae478063e59f");
             telemetry = new TelemetryClient(config);
         }

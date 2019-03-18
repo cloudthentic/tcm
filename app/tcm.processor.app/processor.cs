@@ -25,7 +25,7 @@ namespace tcm.processor.app
                     var fsa = new adapter.fileSystem.FileSystemReaderAdapter();
 
                     var productAggregateList = fsa.ParseFileSystemWithProductHiearchy(path);
-                    var tsa = new adapter.tableStorage.TableStorageWritterAdapter();
+                    var tsa = new adapter.tableStorage.TableStorageWritterAdapter("connection");
                     tsa.WriteProductAggregateListToTableStorage(productAggregateList);
                     telemetry.TrackEvent("Processor.ProcessAll Completed");
                 }
