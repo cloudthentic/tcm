@@ -30,7 +30,7 @@ namespace tcm.web.api.Controllers
         public ActionResult<string> Get(string capability, string attribute)
         {
 
-            tcm.processor.adapter.tableStorage.TableStorageReaderAdapter ra = new processor.adapter.tableStorage.TableStorageReaderAdapter();
+            tcm.processor.adapter.tableStorage.TableStorageReaderAdapter ra = new processor.adapter.tableStorage.TableStorageReaderAdapter("connection");
             var result = ra.ReadProduct(capability, attribute);
             return result;
         }
