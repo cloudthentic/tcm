@@ -27,7 +27,7 @@ namespace tcm.processor.adapter.tableStorage.utest
             list.Add(pa1);
             list.Add(pa2);
 
-            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter();
+            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter("connection");
             var result = wa.ConvertProductsToTableCapabilityEntity(list);
             Assert.NotNull(result);
             Assert.True(result.Count == 2);
@@ -36,7 +36,7 @@ namespace tcm.processor.adapter.tableStorage.utest
         [Fact]
         public void WriteProductAggregateListToTableStorageTest()
         {
-            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter();
+            adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter("connection");
 
             ProductAggregate pa1 = new ProductAggregate();
             pa1.product = "Azure Cosmos DB";
