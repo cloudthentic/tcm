@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System.Web.Http.Cors;
 using Microsoft.Extensions.Configuration;
+using tcm.processor.adapter.tableStorage;
 
 namespace tcm.web.api.Controllers
 {
@@ -36,7 +37,7 @@ namespace tcm.web.api.Controllers
         public ActionResult<string> Get(string capability, string attribute)
         {
             var connection = this.config["apiConfiguration:tableStorageConnection"] as string;
-            tcm.processor.adapter.tableStorage.TableStorageReaderAdapter ra = new processor.adapter.tableStorage.TableStorageReaderAdapter(connection);
+            TableStorageReaderAdapter ra = new TableStorageReaderAdapter(connection);
             var result = ra.ReadProduct(capability, attribute);
             return result;
         }

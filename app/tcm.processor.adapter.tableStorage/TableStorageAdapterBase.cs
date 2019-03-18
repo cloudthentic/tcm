@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.KeyVault;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using System;
@@ -9,9 +12,14 @@ namespace tcm.processor.adapter.tableStorage
 {
     public class TableStorageAdapterBase
     {
-        public TableStorageAdapterBase()
-        {
+        protected CloudStorageAccount storageAccount;
+        protected TelemetryClient telemetry;
 
+        public TableStorageAdapterBase(string connection)
+        {
+            storageAccount = CloudStorageAccount.Parse(connection);
+            TelemetryConfiguration config = new TelemetryConfiguration("362767d6-2f0d-48cc-b789-ae478063e59f");
+            telemetry = new TelemetryClient(config);
         }
 
 
