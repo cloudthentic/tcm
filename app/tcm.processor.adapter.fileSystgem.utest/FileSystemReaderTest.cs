@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using Microsoft.Extensions.Configuration;
 
 namespace tcm.processor.adapter.fileSystem.utest
 {
@@ -29,6 +30,17 @@ namespace tcm.processor.adapter.fileSystem.utest
             var results = reader.ParseFileSystemWithProductHiearchy(value as string);
             Assert.NotNull(results);
             Assert.True(results.Count == 2, "Expected 2 products - failed");
+        }
+
+        [Fact]
+        public void ReadConfigurationTest()
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("tcm.processor.adapter.fileSystem.utest.xunit.runner.json")
+                .Build();
+            var result = config["integer-key"];
+            Assert.NotNull(result);
+            Assert.True((result as string) == "42");
         }
     }
 }

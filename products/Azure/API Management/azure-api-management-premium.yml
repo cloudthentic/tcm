@@ -11,7 +11,7 @@ capabilities:
   - capability:
       id: Network|0.1
       capability-attributes:
-        Virtual-Network-Integrationt: Yes
+        Virtual-Network-Integration: Yes
         Service-Endpoint: No 
 
   - capability:

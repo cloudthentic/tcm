@@ -43,8 +43,9 @@ namespace tcm.processor.adapter.tableStorage
             {
                 telemetry.TrackException(ex);
                 throw ex;
-            }
-            
+            }   
         }
+
+
     }
 }
