@@ -21,7 +21,7 @@ namespace tcm.processor.model.Services
                     {
                         var capabilityAggregate = this.IsCapabilityAttributeCreated(capabilityAggregates, capability.Id, attribute.Name);
                         if(capabilityAggregate == null) this.AddNewCapabilityAndProductIntoCapabilityAttributeList(capabilityAggregates, capability, product, attribute);
-                        else capabilityAggregate.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value);
+                        else capabilityAggregate.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value, product.productId);
                     }
                 }
             }
@@ -55,7 +55,7 @@ namespace tcm.processor.model.Services
             CapabilityAggregate ca = new CapabilityAggregate();
             ca.CapabilityId = capability.Id;
             ca.Attribute = attribute.Name;
-            ca.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value);
+            ca.AddNewProductCapabilityAttributeToTheList(product.product, attribute.Value, product.productId);
             capabilityAggregates.Add(ca);
 
         }

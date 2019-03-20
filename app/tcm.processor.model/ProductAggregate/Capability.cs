@@ -8,6 +8,7 @@ namespace tcm.processor.model
 
         public CapabilityAttributes capabilityAttributes { get; }
 
+
         public Capability(string id)
         {
             Id = id;

@@ -29,7 +29,7 @@ namespace tcm.processor.adapter.fileSystem.utest
             tcm.processor.adapter.fileSystem.FileSystemReaderAdapter reader = new FileSystemReaderAdapter();
             var results = reader.ParseFileSystemWithProductHiearchy(value as string);
             Assert.NotNull(results);
-            Assert.True(results.Count == 2, "Expected 2 products - failed");
+            Assert.True(results.Count == 8, "Expected 2 products - failed");
         }
 
         [Fact]

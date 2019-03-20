@@ -19,10 +19,22 @@ namespace tcm.processor.model
 
         public IList<ProductHasCapabilityAttribute> ListOfProductHasCapabilityAttribute { get; private set; }
 
-        public void AddNewProductCapabilityAttributeToTheList(string product, string hasCapability)
+        public void AddNewProductCapabilityAttributeToTheList(string product, string hasCapability, string productId)
         {
+            string[] items = productId.Split('|');
+            string productVersion = String.Empty;
+            string productName;
+
+            if (items.Length == 2)
+            {
+                productVersion = items[1];
+                productName = ($"{product}|{productVersion}");
+            }
+            else productName = product;
+
             if (ListOfProductHasCapabilityAttribute == null) this.ListOfProductHasCapabilityAttribute = new List<ProductHasCapabilityAttribute>();
-            this.ListOfProductHasCapabilityAttribute.Add(new ProductHasCapabilityAttribute(product, hasCapability));
+            this.ListOfProductHasCapabilityAttribute.Add(new ProductHasCapabilityAttribute(productName, hasCapability));
         }
+
     }
 }

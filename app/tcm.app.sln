@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.web.blazor.app", "web\b
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{B1338343-6012-48FB-9F72-EEDCB75C0FB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.model.standard", "..\tcm.model.standard\tcm.model.standard.csproj", "{2832F54B-6B1B-4BCC-AEC4-A66E64B17B2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.model.standard", "tcm.model.standard\tcm.model.standard.csproj", "{2832F54B-6B1B-4BCC-AEC4-A66E64B17B2C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tcm.importer.model", "tcm.importer.model\tcm.importer.model.csproj", "{7D977FB7-BCF1-4553-AD14-4B19DBF916AB}"
 EndProject

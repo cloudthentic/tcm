@@ -4,20 +4,39 @@
 <h1>Capability View</h1>
 
 <div>
-    @if (capabilitiesList == null)
+    Capability:
+    @if (capabilityList == null)
     {
         <p><em>Loading...</em></p>
     }
     else
     {
-        <select name="capabilities" onchange="@LoadDataAsync" >
-            @foreach (var capabilityItem in capabilitiesList)
+        <select name="capability" onchange="@LoadCapabilityDataAsync">
+            @foreach (var capabilityItem in capabilityList)
             {
                 <option value="@capabilityItem.Id">@capabilityItem.Name</option>
             }
         </select>
     }
 </div>
+
+<div>
+    Capability Attributes:
+    @if (capabilityAttributeList == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <select name="attribute" onchange="@LoadAttributeDataAsync" >
+            @foreach (var attributeItem in capabilityAttributeList)
+            {
+                <option value="@attributeItem.Id">@attributeItem.Name</option>
+            }
+        </select>
+    }
+</div>
+
 
 @if (capabilityMatrix == null)
 {
@@ -48,21 +67,31 @@ else
 
 
     tcm.model.CapabilityMatrix[] capabilityMatrix;
-    tcm.model.Capability[] capabilitiesList;
-    tcm.model.Capability selectedCapability = new tcm.model.Capability();
+    tcm.model.Capability[] capabilityList;
+    tcm.model.Capability[] capabilityAttributeList;
+    tcm.model.Capability selectedAttribute = new tcm.model.Capability();
     bool initialized = false;
 
     protected override async Task OnInitAsync()
     {
         try
         {
-            string url = new Uri("http://localhost:5001/api/Capabilities/Network|0.1").AbsoluteUri;
+            string attributesurl = new Uri("http://localhost:5001/api/Capabilities/Network|0.1").AbsoluteUri;
+            string capabilitiesurl = new Uri("http://localhost:5001/api/Capabilities/").AbsoluteUri;
+
+            string initialattributeurl = new Uri("http://localhost:5001/api/values/Network|0.1/Virtual-Network-Integration").AbsoluteUri;
 
 
-            capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
-            capabilitiesList = await Http.GetJsonAsync<tcm.model.Capability[]>(url);
+            //capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>("sample-data/singleCapabilityManyProducts.json");
+
+            capabilityAttributeList = await Http.GetJsonAsync<tcm.model.Capability[]>(attributesurl);
+            capabilityList = await Http.GetJsonAsync<tcm.model.Capability[]>(capabilitiesurl);
+            capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>(initialattributeurl);
+
             initialized = true;
             System.Diagnostics.Debug.WriteLine("Initialized...");
+
+
         }
         catch (Exception ex)
         {
@@ -70,20 +99,34 @@ else
         }
     }
 
-    public async Task LoadDataAsync(UIChangeEventArgs e)
+    public async Task LoadAttributeDataAsync(UIChangeEventArgs e)
     {
-
 
 
         string url = new Uri("http://localhost:5001/api/values/Network|0.1/" + e.Value.ToString()).AbsoluteUri;
 
         System.Diagnostics.Debug.WriteLine("LoadDataAsync... ");
-        selectedCapability.Id = e.Value.ToString();
-        if (initialized == true && selectedCapability != null)
+        selectedAttribute.Id = e.Value.ToString();
+        if (initialized == true && selectedAttribute != null)
         {
             capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>(url);
 
         }
     }
+
+    public async Task LoadCapabilityDataAsync(UIChangeEventArgs e)
+    {
+
+        string url = new Uri("http://localhost:5001/api/values/Network|0.1/" + e.Value.ToString()).AbsoluteUri;
+
+        System.Diagnostics.Debug.WriteLine("LoadDataAsync... ");
+        selectedAttribute.Id = e.Value.ToString();
+        if (initialized == true && selectedAttribute != null)
+        {
+            capabilityMatrix = await Http.GetJsonAsync<tcm.model.CapabilityMatrix[]>(url);
+
+        }
+    }
+
 
 }

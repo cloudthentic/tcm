@@ -33,16 +33,16 @@ namespace tcm.processor.model.utest
 
             Assert.True(result[0].CapabilityId == "Network|0.1");
             Assert.True(result[0].Attribute == "Virtual-Network-Integration");
-            Assert.True(result[0].ListOfProductHasCapabilityAttribute[0].Product == "Azure Cosmos DB");
+            Assert.True(result[0].ListOfProductHasCapabilityAttribute[0].Product == "Azure Cosmos DB|basic");
             Assert.True(result[0].ListOfProductHasCapabilityAttribute[0].HasCapability == "No");
-            Assert.True(result[0].ListOfProductHasCapabilityAttribute[1].Product == "Azure API Management");
+            Assert.True(result[0].ListOfProductHasCapabilityAttribute[1].Product == "Azure API Management|basic");
             Assert.True(result[0].ListOfProductHasCapabilityAttribute[1].HasCapability == "Yes");
 
             Assert.True(result[1].CapabilityId == "Network|0.1");
             Assert.True(result[1].Attribute == "Service-Endpoint");
-            Assert.True(result[1].ListOfProductHasCapabilityAttribute[0].Product == "Azure Cosmos DB");
+            Assert.True(result[1].ListOfProductHasCapabilityAttribute[0].Product == "Azure Cosmos DB|basic");
             Assert.True(result[1].ListOfProductHasCapabilityAttribute[0].HasCapability == "No");
-            Assert.True(result[1].ListOfProductHasCapabilityAttribute[1].Product == "Azure API Management");
+            Assert.True(result[1].ListOfProductHasCapabilityAttribute[1].Product == "Azure API Management|basic");
             Assert.True(result[1].ListOfProductHasCapabilityAttribute[1].HasCapability == "No");
         }
     }
