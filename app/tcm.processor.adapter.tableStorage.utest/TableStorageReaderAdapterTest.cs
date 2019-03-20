@@ -29,7 +29,10 @@ namespace tcm.processor.adapter.tableStorage.utest
         [Fact]
         public void ReadCapabilitiesTest()
         {
-
+            var connection = this.GetConfiguration()["tableStorageConnection"];
+            TableStorageReaderAdapter adapter = new TableStorageReaderAdapter(connection);
+            var results = adapter.ReadCapabilities();
+            Assert.NotNull(results);
         }
     }
 }

@@ -88,5 +88,26 @@ namespace tcm.processor.adapter.tableStorage
             }
         }
 
+        public IList<model.CapabilityView> ReadCapabilityView()
+        {
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+            CloudTable table = tableClient.GetTableReference("tcmapp");
+
+            TableQuery<CapabilityEntity> query = new TableQuery<CapabilityEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "capability"));
+
+            TableContinuationToken token = new TableContinuationToken();
+            var result = table.ExecuteQuerySegmentedAsync(query, token).Result;
+            var res = result.Results as IList<CapabilityEntity>;
+
+            List<model.CapabilityView> viewList = new List<model.CapabilityView>();
+            foreach(var item in res)
+            {
+                var record = new model.CapabilityView(item.RowKey, item.RowKey);
+                viewList.Add(record);
+            }
+
+            return viewList;
+        }
+
     }
 }
