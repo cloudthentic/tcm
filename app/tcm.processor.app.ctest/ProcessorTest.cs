@@ -10,7 +10,7 @@ namespace tcm.processor.app.ctest
         private IConfigurationRoot GetConfiguration()
         {
             var config = new ConfigurationBuilder()
-                .AddJsonFile("tcm.processor.app.ctest.xunit.runner.json")
+                .AddJsonFile("appSettings.development.json")
                 .Build();
             return config;
         }

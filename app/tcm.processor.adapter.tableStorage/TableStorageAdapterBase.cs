@@ -14,6 +14,7 @@ namespace tcm.processor.adapter.tableStorage
     {
         protected CloudStorageAccount storageAccount;
         protected TelemetryClient telemetry;
+        protected string tableName = "tcmapp";
 
         public TableStorageAdapterBase(string connection)
         {

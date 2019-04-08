@@ -6,12 +6,15 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace tcm.processor.adapter.tableStorage
 {
+    /// <summary>
+    /// generic Table entity used to persist both CapabilityAggregate and CapabilityDefinitionAggregate
+    /// </summary>
     public class CapabilityEntity : TableEntity
     {
-        public CapabilityEntity(string capability, string capabilityAttribute)
+        public CapabilityEntity(string partitionKey, string rowKey)
         {
-            this.PartitionKey = capability;
-            this.RowKey = capabilityAttribute;
+            this.PartitionKey = partitionKey;
+            this.RowKey = rowKey;
         }
 
         public CapabilityEntity() { }

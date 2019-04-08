@@ -20,7 +20,7 @@ namespace tcm.processor.adapter.tableStorage
             try
             {
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable table = tableClient.GetTableReference("tcmapp");
+                CloudTable table = tableClient.GetTableReference(this.tableName);
 
                 string partitionKey = capability;
                 string rowKey = attribute;
@@ -46,7 +46,7 @@ namespace tcm.processor.adapter.tableStorage
             try
             {
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable table = tableClient.GetTableReference("tcmapp");
+                CloudTable table = tableClient.GetTableReference(this.tableName);
 
                 string partitionKey = capability;
                 string rowKey = attribute;
@@ -72,7 +72,7 @@ namespace tcm.processor.adapter.tableStorage
             try
             {
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable table = tableClient.GetTableReference("tcmapp");
+                CloudTable table = tableClient.GetTableReference(this.tableName);
 
                 TableOperation operation = TableOperation.Retrieve<CapabilityEntity>("capability", id);
 
@@ -91,7 +91,7 @@ namespace tcm.processor.adapter.tableStorage
         public IList<model.CapabilityView> ReadCapabilityView()
         {
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference("tcmapp");
+            CloudTable table = tableClient.GetTableReference(this.tableName);
 
             TableQuery<CapabilityEntity> query = new TableQuery<CapabilityEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "capability"));
 

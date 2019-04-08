@@ -5,6 +5,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <ApplicationInsightsResourceId>/subscriptions/3aba1271-ca5f-49e8-9229-2214ec0ac30c/resourcegroups/product-tcm/providers/microsoft.insights/components/tcm.web.api</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/3aba1271-ca5f-49e8-9229-2214ec0ac30c/resourcegroups/product-tcm/providers/microsoft.insights/components/tcm.web.api</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>97d93c3a-1469-4672-b707-d61af2900ddd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

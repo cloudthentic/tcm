@@ -13,6 +13,7 @@ namespace tcm.processor.adapter.tableStorage
     /// </summary>
     public class TableStorageWritterAdapter
     {
+        string tableName = "tcmapp";
         CloudStorageAccount storageAccount;
         TelemetryClient telemetry;
 
@@ -21,6 +22,40 @@ namespace tcm.processor.adapter.tableStorage
             storageAccount = CloudStorageAccount.Parse(connection);
             TelemetryConfiguration config = new TelemetryConfiguration("362767d6-2f0d-48cc-b789-ae478063e59f");
             telemetry = new TelemetryClient(config);
+        }
+
+        public void WriteCapabilityDefinitionAggregateListToTableStorage(IList<model.CapabilityDefinitionAggregate.CapabilityDefinitionAggregate> capabilityDefinitions)
+        {
+            var success = false;
+            var startTime = DateTime.UtcNow;
+            var timer = System.Diagnostics.Stopwatch.StartNew();
+
+            try
+            {
+                CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
+                CloudTable table = tableClient.GetTableReference(tableName);
+
+                var capabilityEntities = this.FromCapabilityDefinitionList(capabilityDefinitions);
+
+                TableBatchOperation batchOperation = new TableBatchOperation();
+                foreach (var item in capabilityEntities)
+                {
+                    // add only if the item belongs to the partition
+                    batchOperation.InsertOrReplace(item);
+                }
+                IList<TableResult> result = table.ExecuteBatchAsync(batchOperation).Result;
+
+                success = true;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                timer.Stop();
+                telemetry.TrackDependency("Azure Table Storage", "WriteCapabilityDefinitionAggregateListToTableStorage", startTime, timer.Elapsed, success);
+            }
         }
 
         public void WriteProductAggregateListToTableStorage(IList<model.ProductAggregate> products)
@@ -33,9 +68,9 @@ namespace tcm.processor.adapter.tableStorage
 
                 // convert Productaggregates into CapabilityAggregate
                 CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-                CloudTable table = tableClient.GetTableReference("tcmapp");
+                CloudTable table = tableClient.GetTableReference(tableName);
 
-                var items = this.ConvertProductsToTableCapabilityEntity(products);
+                var items = this.FromProductAggregateList(products);
                 
                 var partitions = this.GetPartitionKeyList(items);
 
@@ -81,7 +116,7 @@ namespace tcm.processor.adapter.tableStorage
             return keys;
         }
 
-        public IList<CapabilityEntity> ConvertProductsToTableCapabilityEntity(IList<model.ProductAggregate> products)
+        public IList<CapabilityEntity> FromProductAggregateList(IList<model.ProductAggregate> products)
         {
             model.Services.ProductToCapabilityAggregateService service = new model.Services.ProductToCapabilityAggregateService();
             var capabilityAggregateList = service.ConvertProductToCapabilityAggregate(products);
@@ -93,6 +128,21 @@ namespace tcm.processor.adapter.tableStorage
                 var newEntity = new CapabilityEntity(item.CapabilityId, item.Attribute);
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(item.ListOfProductHasCapabilityAttribute);
                 newEntity.products = output;
+                capabilityEntityList.Add(newEntity);
+            }
+
+            return capabilityEntityList;
+        }
+
+        private IList<CapabilityEntity> FromCapabilityDefinitionList(IList<model.CapabilityDefinitionAggregate.CapabilityDefinitionAggregate> capabilityDefinitions)
+        {
+            var capabilityEntityList = new List<CapabilityEntity>();
+
+            foreach(var item in capabilityDefinitions)
+            {
+                var newEntity = new CapabilityEntity("capability", item.CapabilityId);
+                string products = Newtonsoft.Json.JsonConvert.SerializeObject(item.CapabilityAttributes);
+                newEntity.products = products;
                 capabilityEntityList.Add(newEntity);
             }
 

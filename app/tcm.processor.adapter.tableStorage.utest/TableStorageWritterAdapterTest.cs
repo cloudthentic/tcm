@@ -11,7 +11,7 @@ namespace tcm.processor.adapter.tableStorage.utest
         private IConfigurationRoot GetConfiguration()
         {
             var config = new ConfigurationBuilder()
-                .AddJsonFile("tcm.processor.adapter.tableStorage.utest.xunit.runner.json")
+                .AddJsonFile("tcm.processor.adapter.tableStorage.utest.xunit.runner.development.json")
                 .Build();
             return config;
         }
@@ -39,7 +39,7 @@ namespace tcm.processor.adapter.tableStorage.utest
 
             var connection = this.GetConfiguration()["tableStorageConnection"];
             adapter.tableStorage.TableStorageWritterAdapter wa = new TableStorageWritterAdapter(connection);
-            var result = wa.ConvertProductsToTableCapabilityEntity(list);
+            var result = wa.FromProductAggregateList(list);
             Assert.NotNull(result);
             Assert.True(result.Count == 2);
         }

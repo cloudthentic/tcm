@@ -12,7 +12,7 @@ namespace tcm.processor.adapter.tableStorage.utest
         private IConfigurationRoot GetConfiguration()
         {
             var config = new ConfigurationBuilder()
-                .AddJsonFile("tcm.processor.adapter.tableStorage.utest.xunit.runner.json")
+                .AddJsonFile("appSettings.development.json")
                 .Build();
             return config;
         }
@@ -31,7 +31,7 @@ namespace tcm.processor.adapter.tableStorage.utest
         {
             var connection = this.GetConfiguration()["tableStorageConnection"];
             TableStorageReaderAdapter adapter = new TableStorageReaderAdapter(connection);
-            var results = adapter.ReadCapabilities();
+            var results = adapter.ReadCapabilities("Network|0.1");
             Assert.NotNull(results);
         }
     }

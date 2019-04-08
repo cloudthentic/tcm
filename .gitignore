@@ -263,3 +263,5 @@ paket-files/
 __pycache__/
 *.pyc
 /app/web/blazor-app/tcm.web.api/appsettings.Development.json
+/app/tcm.processor.adapter.tableStorage.utest/appSettings.development.json
+/app/tcm.processor.app.ctest/appSettings.development.json
